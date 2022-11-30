@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.bamazon'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // ------ test containers ------
+    implementation platform('org.testcontainers:testcontainers-bom:1.17.5') //import bom
+    testImplementation "org.testcontainers:mongodb:1.17.5"
+    // Adding Testcontainers JUnit 5 support to your project dependencies
+    testImplementation "org.testcontainers:junit-jupiter:1.17.5"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
